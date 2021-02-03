@@ -1,0 +1,1 @@
+# fosstars-rating-core-action
