@@ -1,3 +1,5 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core-action)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core-action)
+
 # Fosstars ratings
 
 This action calculates [a security rating for an open source project](https://sap.github.io/fosstars-rating-core/oss_security_rating.html).
