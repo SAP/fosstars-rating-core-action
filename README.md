@@ -3,8 +3,10 @@
 # Fosstars ratings
 
 This action calculates [a security rating for an open source project](https://sap.github.io/fosstars-rating-core/oss_security_rating.html).
-The rating shows how well the project cares about security.
-It takes into account multiple factors:
+The rating contains a security score and a label. The score is a number from 0 to 10.
+It shows how well the project cares about security. The label can be `Good`, `Moderate`, `Bad` and `Unclear`.
+
+The rating procedure takes into account multiple factors:
 
 *  How well the open source project implements security testing.
 *  How well the project’s community is aware of best security practices and adopt them.
@@ -16,7 +18,15 @@ Fosstars uses only publicly available data about open source projects.
 
 The action creates a detailed report that explains how the rating was calculated.
 In addition, the report contains recommendations for improving the security rating.
-The action also generates a badge with the calculated rating.
+
+The action also generates one of the following badges:
+
+*  ![Good security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-good.svg)
+*  ![Moderate security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-moderate.svg)
+*  ![Bad security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-bad.svg)
+*  ![Unclear security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-unclear.svg)
+*  ![Unknown security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-unknown.svg)
+
 The report and the badge are stored in a specified branch.
 
 ## Inputs
@@ -61,6 +71,24 @@ The badge will be stored to the same branch. It can be used in a README file:
 ```
 [![Fosstars security rating](https://raw.githubusercontent.com/your-organisation/your-project/fosstars-report/fosstars-security-rating.svg)](https://github.com/your-organisation/your-project/blob/fosstars-report/fosstars_security_rating.md)
 ```
+
+## Known issues
+
+Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core-action/issues).
+
+## Support
+
+Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core-action/issues)
+if you found a bug, or you'd like to suggest an enhancement.
+If you think you found a security issue, please follow [this guideline](SECURITY.md).
+
+If you have a question, please [open a discussion](https://github.com/SAP/fosstars-rating-core/discussions).
+
+## Contributing
+
+We appreciate feedback, ideas for improvements and, of course, pull requests.
+
+Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
 
 ## Links
 
