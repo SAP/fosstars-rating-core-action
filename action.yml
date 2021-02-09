@@ -1,10 +1,16 @@
 name: "Calculate Fosstars security rating"
-description: "The action calculates a security rating for a project and stores it to a branch."
+description: "The action calculates a security rating for a project. It outputs a report in Markdown format and an SVG badge."
 inputs:
   report-branch:
     description: "A branch where the report is stored"
     required: true
     default: fosstars
+  report-file:
+    description: "A file name where the report is stored"
+    required: false
+  badge-file:
+    description: "A file name where the badge is stored"
+    required: false
   token:
     description: "A GitHub token for accessing the repository"
     required: true
@@ -13,4 +19,6 @@ runs:
   image: "Dockerfile"
   args:
     - ${{ inputs.report-branch }}
+    - ${{ inputs.report-file }}
+    - ${{ inputs.badge-file }}
     - ${{ inputs.token }}
