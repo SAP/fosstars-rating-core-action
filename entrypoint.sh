@@ -55,7 +55,7 @@ case $label in
       suffix="unknown"
       ;;
 esac
-wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core/master/.github/actions/fosstars-create-single-report/images/security-fosstars-$suffix.svg
+wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-$suffix.svg
 git add $BADGE_FILE
 
 # Commit the report and the badge
