@@ -40,6 +40,14 @@ The report and the badge are stored in a specified branch.
 **Required** A token for fetching data about the project via GitHub API,
 and for committing the report and badge to the specified branch.
 
+### `report-file`
+
+**Optional** A file name for the report. Default `fosstars_report.md`.
+
+### `badge-file`
+
+**Optional** A file name for the badge. Default `fosstars_badge.svg`.
+
 ## How to use it
 
 Here is an example workflow that updates the report every day, or when a commit is pushed.
@@ -60,9 +68,11 @@ jobs:
     name: "Security rating"
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: ./.github/actions/fosstars-create-single-report
+      - uses: SAP/fosstars-rating-core-action
         with:
           report-branch: fosstars-report
+          report-file: fosstars_security_rating.md
+          badge-file: fosstars_security_rating.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
@@ -82,7 +92,7 @@ Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core-a
 if you found a bug, or you'd like to suggest an enhancement.
 If you think you found a security issue, please follow [this guideline](SECURITY.md).
 
-If you have a question, please [open a discussion](https://github.com/SAP/fosstars-rating-core/discussions).
+If you have a question, please [open a discussion](https://github.com/SAP/fosstars-rating-core-action/discussions).
 
 ## Contributing
 
