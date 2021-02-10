@@ -19,7 +19,7 @@ if [ "$BADGE_FILE" = "" ]; then
 fi
 
 PROJECT_SCM_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY
-RAW_RATING_FILE="fosstars_security_rating.json"
+RAW_RATING_FILE="fosstars_rating.json"
 
 # Switch to the branch where the report should be stored
 git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
@@ -40,10 +40,6 @@ java -jar /opt/stuff/fosstars-rating-core/target/fosstars-github-rating-calc.jar
           --raw-rating-file $RAW_RATING_FILE
 
 git add $REPORT_FILE $RAW_RATING_FILE
-if git status | grep "nothing to commit" > /dev/null 2>&1 ; then
-    echo "No updates found"
-    exit 0
-fi
 
 # Update the current badge
 label=$(cat $RAW_RATING_FILE | jq -r .label[1] | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
@@ -59,9 +55,14 @@ wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-a
 git add $BADGE_FILE
 
 # Commit the report and the badge
-set -e
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
-git commit -m "Update Fosstars security rating report" $REPORT_FILE $BADGE_FILE $RAW_RATING_FILE
+
+git commit -m "Update Fosstars report" $REPORT_FILE $BADGE_FILE $RAW_RATING_FILE
+if [ $1 -ne 0 ]; then
+    echo "Could not commit anything"
+    exit 0
+fi
+
 git remote set-url origin https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY
 git push origin $REPORT_BRANCH
