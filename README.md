@@ -82,6 +82,11 @@ The badge will be stored to the same branch. It can be used in a README file:
 [![Fosstars security rating](https://raw.githubusercontent.com/your-organisation/your-project/fosstars-report/fosstars-security-rating.svg)](https://github.com/your-organisation/your-project/blob/fosstars-report/fosstars_security_rating.md)
 ```
 
+## Example
+
+Check out [an example workflow](https://github.com/SAP/fosstars-rating-core/blob/master/.github/workflows/fosstars-project-report.yml) that runs the action.
+The workflow stores [a report](https://github.com/SAP/fosstars-rating-core/blob/fosstars-report/fosstars_report.md) in [fosstars-report](https://github.com/SAP/fosstars-rating-core/tree/fosstars-report) branch.
+
 ## Known issues
 
 Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core-action/issues).
