@@ -35,6 +35,11 @@ The report and the badge are stored in a specified branch.
 
 **Required** A branch where the report and the badge should be stored. Default `fosstars`.
 
+### `fosstars-version`
+
+**Required** [A version of Fosstars](https://github.com/SAP/fosstars-rating-core/releases)
+to be used for calculating a rating. Default `v1.2.0`.
+
 ### `token`
 
 **Required** A token for fetching data about the project via GitHub API,

@@ -11,6 +11,10 @@ inputs:
   badge-file:
     description: "A file name where the badge is stored"
     required: false
+  fosstars-version:
+    description: "A version of Fosstars"
+    required: true
+    default: v1.2.0
   token:
     description: "A GitHub token for accessing the repository"
     required: true
