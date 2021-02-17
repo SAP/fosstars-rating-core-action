@@ -25,4 +25,5 @@ runs:
     - ${{ inputs.report-branch }}
     - ${{ inputs.report-file }}
     - ${{ inputs.badge-file }}
+    - ${{ inputs.fosstars-version }}
     - ${{ inputs.token }}
