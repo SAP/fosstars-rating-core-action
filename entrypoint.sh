@@ -3,10 +3,16 @@
 REPORT_BRANCH=$1
 REPORT_FILE=$2
 BADGE_FILE=$3
-TOKEN=$4
+FOSSTARS_VERSION=$4
+TOKEN=$5
 
 if [ "$REPORT_BRANCH" = "" ]; then
     echo "Oops! No branch provided!"
+    exit 1
+fi
+
+if [ "$FOSSTARS_VERSION" = "" ]; then
+    echo "Oops! No Fosstars version provided!"
     exit 1
 fi
 
@@ -30,8 +36,19 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Build Fosstars
+git clone https://github.com/SAP/fosstars-rating-core && \
+    cd fosstars-rating-core && \
+    git checkout $FOSSTARS_VERSION && \
+    mvn package -DskipTests && \
+if [ $? -ne 0 ]; then
+    echo "Oops! Could not build Fosstars!"
+    exit 1
+fi
+cd ..
+
 # Generate a report
-java -jar /opt/stuff/fosstars-rating-core/target/fosstars-github-rating-calc.jar \
+java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
           --url $PROJECT_SCM_URL \
           --token $TOKEN \
           --verbose \
@@ -59,7 +76,7 @@ git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
 
 git commit -m "Update Fosstars report" $REPORT_FILE $BADGE_FILE $RAW_RATING_FILE
-if [ $1 -ne 0 ]; then
+if [ $? -ne 0 ]; then
     echo "Could not commit anything"
     exit 0
 fi
