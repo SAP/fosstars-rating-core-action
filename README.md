@@ -73,7 +73,7 @@ jobs:
     name: "Security rating"
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: SAP/fosstars-rating-core-action
+      - uses: SAP/fosstars-rating-core-action@v1.0.0
         with:
           report-branch: fosstars-report
           report-file: fosstars_security_rating.md
