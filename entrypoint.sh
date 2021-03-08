@@ -40,7 +40,7 @@ fi
 git clone https://github.com/SAP/fosstars-rating-core && \
     cd fosstars-rating-core && \
     git checkout $FOSSTARS_VERSION && \
-    mvn package -DskipTests && \
+    mvn package -ntp -DskipTests -Dcheckstyle.skip -Dmaven.javadoc.skip && \
 if [ $? -ne 0 ]; then
     echo "Oops! Could not build Fosstars!"
     exit 1
