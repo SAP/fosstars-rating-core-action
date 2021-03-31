@@ -27,3 +27,6 @@ runs:
     - ${{ inputs.badge-file }}
     - ${{ inputs.fosstars-version }}
     - ${{ inputs.token }}
+branding:
+  icon: 'award'  
+  color: 'green'
