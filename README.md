@@ -38,7 +38,7 @@ The report and the badge are stored in a specified branch.
 ### `fosstars-version`
 
 **Required** [A version of Fosstars](https://github.com/SAP/fosstars-rating-core/releases)
-to be used for calculating a rating. Default `v1.3.0`.
+to be used for calculating a rating. Default `v1.4.0`.
 
 ### `token`
 
