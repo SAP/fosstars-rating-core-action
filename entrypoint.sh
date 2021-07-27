@@ -1,10 +1,17 @@
 #!/bin/bash
 
-REPORT_BRANCH=$1
-REPORT_FILE=$2
-BADGE_FILE=$3
-FOSSTARS_VERSION=$4
-TOKEN=$5
+RATING=$1
+REPORT_BRANCH=$2
+REPORT_FILE=$3
+BADGE_FILE=$4
+FOSSTARS_VERSION=$5
+TOKEN=$6
+DATA_PROVIDER_CONFIG_URLS=$7
+
+if [ "$RATING" = "" ]; then
+    echo "Oops! No rating provided!"
+    exit 1
+fi
 
 if [ "$REPORT_BRANCH" = "" ]; then
     echo "Oops! No branch provided!"
@@ -32,7 +39,7 @@ git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
 git checkout $REPORT_BRANCH
 if [ $? -ne 0 ]; then
     echo "Could not switch to branch '$REPORT_BRANCH'"
-    echo "Did you fortet to run 'actions/checkout' step in your workflow?"
+    echo "Did you forget to run 'actions/checkout' step in your workflow?"
     exit 1
 fi
 
@@ -47,28 +54,78 @@ if [ $? -ne 0 ]; then
 fi
 cd ..
 
+if [ "$DATA_PROVIDER_CONFIG_URLS" == "" ] && [ "$RATING" == "oss-rules-of-play" ]; then
+    data_provider_config_base_url="https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/rop-sap-defaults/"
+    DATA_PROVIDER_CONFIG_URLS="${data_provider_config_base_url}LicenseInfo.config.yml,${data_provider_config_base_url}ContributingGuidelineInfo.config.yml,${data_provider_config_base_url}ReadmeInfo.config.yml"
+fi
+
+if [ "$DATA_PROVIDER_CONFIG_URLS" == "" ]; then
+    DATA_PROVIDER_CONFIGS=""
+else
+    IFS=',' read -ra data_provider_config_url_array <<< "$DATA_PROVIDER_CONFIG_URLS"
+    for config_url in "${data_provider_config_url_array[@]}"
+    do
+        config_basename=$(basename $config_url)
+        wget -O $config_basename $config_url
+        if [ "$DATA_PROVIDER_CONFIGS" != "" ]; then
+            DATA_PROVIDER_CONFIGS="${DATA_PROVIDER_CONFIGS},"
+        fi
+        DATA_PROVIDER_CONFIGS="${DATA_PROVIDER_CONFIGS}${config_basename}"
+    done
+fi
+
 # Generate a report
-java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
+if [ "$DATA_PROVIDER_CONFIGS" == "" ]; then
+    java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
           --url $PROJECT_SCM_URL \
           --token $TOKEN \
+          --rating $RATING \
           --verbose \
           --report-file $REPORT_FILE \
           --report-type markdown \
           --raw-rating-file $RAW_RATING_FILE
+else
+    java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
+          --url $PROJECT_SCM_URL \
+          --token $TOKEN \
+          --rating $RATING \
+          --verbose \
+          --report-file $REPORT_FILE \
+          --report-type markdown \
+          --raw-rating-file $RAW_RATING_FILE \
+          --data-provider-configs $DATA_PROVIDER_CONFIGS
+fi
 
 git add $REPORT_FILE $RAW_RATING_FILE
 
 # Update the current badge
 label=$(cat $RAW_RATING_FILE | jq -r .label[1] | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
-case $label in
-    good|moderate|bad|unclear)
-      suffix=$label
-      ;;
-    *)
-      suffix="unknown"
-      ;;
-esac
-wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/security-fosstars-$suffix.svg
+
+if [ "$RATING" == "security" ]; then
+    prefix="security"
+    case $label in
+        good|moderate|bad|unclear)
+        suffix=$label
+        ;;
+        *)
+        suffix="unknown"
+        ;;
+    esac
+fi
+
+if [ "$RATING" == "oss-rules-of-play" ]; then
+    prefix="rop"
+    case $label in
+        passed|passed_with_warning|failed|unclear)
+        suffix=$label
+        ;;
+        *)
+        suffix="unknown"
+        ;;
+    esac
+fi
+
+wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/$prefix-fosstars-$suffix.svg
 git add $BADGE_FILE
 
 # Commit the report and the badge
