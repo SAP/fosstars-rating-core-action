@@ -64,7 +64,7 @@ and for committing the report and badge to the specified branch.
 ### `data-provider-config-urls`
 
 **Optional** A comma-separated list of data provider configuration URLs.
-The individual file names need to have the format `ProviderClassName.yaml`.
+The individual file names need to have the format `ProviderClassName.yaml` or `ProviderClassName.config.yaml`.
 As some data providers of the OSS Rules of Play rating require configuration files to work correctly, [SAP default configuration files](https://github.com/SAP/fosstars-rating-core-action/tree/main/rop-sap-defaults) are being used if the `oss-rules-of-play` rating is specified and no configuration URLs are passed to the action.
 
 ## How to use it
@@ -94,6 +94,7 @@ jobs:
           report-file: fosstars_security_rating.md
           badge-file: fosstars_security_rating.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          data-provider-config-urls: https://raw.githubusercontent.com/your-org/your-repo/main/conf/ReadmeInfo.config.yml,https://raw.githubusercontent.com/your-org/your-repo/main/conf/ContributingGuidelineInfo.config.yml,https://raw.githubusercontent.com/your-org/your-repo/main/conf/LicenseInfo.config.yml
 ```
 
 The badge will be stored to the same branch. It can be used in a README file:
