@@ -1,5 +1,5 @@
 name: "Calculate Fosstars rating"
-description: "The action calculates a security or OSS rules of play rating for a project. It outputs a report in Markdown format and an SVG badge."
+description: "The action calculates one of the Fosstars ratings. It outputs a report in Markdown format and an SVG badge."
 inputs:
   rating:
     description: "The rating that is used for the Fosstars report, either 'security' or 'oss-rules-of-play'"

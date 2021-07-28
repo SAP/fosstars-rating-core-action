@@ -13,6 +13,19 @@ if [ "$RATING" = "" ]; then
     exit 1
 fi
 
+case $RATING in
+    security)
+        badge_prefix="security" 
+        ;;
+    oss-rules-of-play)
+        badge_prefix="rop"
+        ;;
+    *)
+        echo "Oops! Unknown rating '$RATING'!"
+        exit 1
+        ;;
+esac
+
 if [ "$REPORT_BRANCH" = "" ]; then
     echo "Oops! No branch provided!"
     exit 1
@@ -59,9 +72,8 @@ if [ "$DATA_PROVIDER_CONFIG_URLS" == "" ] && [ "$RATING" == "oss-rules-of-play" 
     DATA_PROVIDER_CONFIG_URLS="${data_provider_config_base_url}LicenseInfo.config.yml,${data_provider_config_base_url}ContributingGuidelineInfo.config.yml,${data_provider_config_base_url}ReadmeInfo.config.yml"
 fi
 
-if [ "$DATA_PROVIDER_CONFIG_URLS" == "" ]; then
-    DATA_PROVIDER_CONFIGS=""
-else
+DATA_PROVIDER_CONFIG_OPTION=""
+if [ "$DATA_PROVIDER_CONFIG_URLS" != "" ]; then
     IFS=',' read -ra data_provider_config_url_array <<< "$DATA_PROVIDER_CONFIG_URLS"
     for config_url in "${data_provider_config_url_array[@]}"
     do
@@ -72,60 +84,38 @@ else
         fi
         DATA_PROVIDER_CONFIGS="${DATA_PROVIDER_CONFIGS}${config_basename}"
     done
+    DATA_PROVIDER_CONFIG_OPTION="--data-provider-configs $DATA_PROVIDER_CONFIGS"
 fi
 
 # Generate a report
-if [ "$DATA_PROVIDER_CONFIGS" == "" ]; then
-    java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
-          --url $PROJECT_SCM_URL \
-          --token $TOKEN \
-          --rating $RATING \
-          --verbose \
-          --report-file $REPORT_FILE \
-          --report-type markdown \
-          --raw-rating-file $RAW_RATING_FILE
-else
-    java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
-          --url $PROJECT_SCM_URL \
-          --token $TOKEN \
-          --rating $RATING \
-          --verbose \
-          --report-file $REPORT_FILE \
-          --report-type markdown \
-          --raw-rating-file $RAW_RATING_FILE \
-          --data-provider-configs $DATA_PROVIDER_CONFIGS
-fi
+java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
+      --url $PROJECT_SCM_URL \
+      --token $TOKEN \
+      --rating $RATING \
+      --verbose \
+      --report-file $REPORT_FILE \
+      --report-type markdown \
+      --raw-rating-file $RAW_RATING_FILE \
+      $DATA_PROVIDER_CONFIG_OPTION
 
 git add $REPORT_FILE $RAW_RATING_FILE
 
 # Update the current badge
 label=$(cat $RAW_RATING_FILE | jq -r .label[1] | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
 
-if [ "$RATING" == "security" ]; then
-    prefix="security"
-    case $label in
-        good|moderate|bad|unclear)
+case "${badge_prefix}-${label}" in
+    security-good|security-moderate|security-bad|security-unclear)
         suffix=$label
         ;;
-        *)
-        suffix="unknown"
-        ;;
-    esac
-fi
-
-if [ "$RATING" == "oss-rules-of-play" ]; then
-    prefix="rop"
-    case $label in
-        passed|passed_with_warning|failed|unclear)
+    rop-passed|rop-passed_with_warning|rop-failed|rop-unclear)
         suffix=$label
         ;;
-        *)
+    *)
         suffix="unknown"
         ;;
-    esac
-fi
+esac
 
-wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/$prefix-fosstars-$suffix.svg
+wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-action/main/images/${badge_prefix}-fosstars-$suffix.svg
 git add $BADGE_FILE
 
 # Commit the report and the badge
