@@ -4,7 +4,8 @@
 
 This action calculates [a security rating](https://sap.github.io/fosstars-rating-core/oss_security_rating.html) or [an OSS rule of play rating](https://sap.github.io/fosstars-rating-core/oss_rules_of_play_rating.html) for an open source project.
 The rating contains a score and a label. The score is a number from 0 to 10.
-It shows how well the project cares about security or open source community/maintenance aspects. Please [see the documentation](https://sap.github.io/fosstars-rating-core/) for additional details.
+
+It shows how well the project cares about security or open source community/maintenance aspects. The ratings take several aspects into account. You can find all the details regarding the various aspects in the section "What the security rating takes into account" of [the security rating documentation](https://sap.github.io/fosstars-rating-core/oss_security_rating.html) and the section "What the OSS rules of play rating takes into account" of [the OSS rules of play documentation](https://sap.github.io/fosstars-rating-core/oss_rules_of_play_rating.html). Additional information about Fosstars, how the ratings are calculated and related content is available [in the documentation](https://sap.github.io/fosstars-rating-core/) as well.
 
 Fosstars uses only publicly available data about open source projects.
 
@@ -13,7 +14,7 @@ In addition, the report contains recommendations for improving the respective ra
 
 ## Badges
 
-The action also generates one of the following badges:
+The action generates one of the following badges that reflect the labels of the respective ratings (see [security](https://sap.github.io/fosstars-rating-core/oss_security_rating.html) or [OSS rules of play](https://sap.github.io/fosstars-rating-core/oss_rules_of_play_rating.html)):
 
 ### Security
 
