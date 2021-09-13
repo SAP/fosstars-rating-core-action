@@ -1,4 +1,5 @@
 ---
 repositoryExceptions:
   - https://github.com/SAP/SapMachine
+  - https://github.com/SAP/SapMachine-infrastructure
   - https://github.com/SAP/async-profiler
