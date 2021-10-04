@@ -2,3 +2,4 @@
 repositoryExceptions:
   - https://github.com/SAP/SapMachine
   - https://github.com/SAP/async-profiler
+  - https://github.com/SAP/project-foxhound
