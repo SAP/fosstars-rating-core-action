@@ -12,3 +12,4 @@ repositoryExceptions:
   - https://github.com/SAP/software-documentation-data-set-for-machine-translation
   - https://github.com/SAP/project-foxhound
   - https://github.com/SAP/jmc
+  - https://github.com/SAP/sanitizer-checker
