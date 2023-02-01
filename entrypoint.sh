@@ -47,6 +47,9 @@ fi
 PROJECT_SCM_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY
 RAW_RATING_FILE="fosstars_rating.json"
 
+# Mark /github/workspace as safe directory
+git config --global --add safe.directory /github/workspace
+
 # Switch to the branch where the report should be stored
 git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
 git checkout $REPORT_BRANCH
