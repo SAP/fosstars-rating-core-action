@@ -7,6 +7,8 @@ BADGE_FILE=$4
 FOSSTARS_VERSION=$5
 TOKEN=$6
 DATA_PROVIDER_CONFIG_URLS=$7
+GIT_USER_NAME=$8
+GIT_USER_EMAIL=$9
 
 if [ "$RATING" = "" ]; then
     echo "Oops! No rating provided!"
@@ -33,6 +35,16 @@ fi
 
 if [ "$FOSSTARS_VERSION" = "" ]; then
     echo "Oops! No Fosstars version provided!"
+    exit 1
+fi
+
+if [ "$GIT_USER_NAME" = "" ]; then
+    echo "Oops! No git user name provided!"
+    exit 1
+fi
+
+if [ "$GIT_USER_EMAIL" = "" ]; then
+    echo "Oops! No git user email provided!"
     exit 1
 fi
 
@@ -122,8 +134,8 @@ wget -O $BADGE_FILE https://raw.githubusercontent.com/SAP/fosstars-rating-core-a
 git add $BADGE_FILE
 
 # Commit the report and the badge
-git config --global user.name "Fosstars"
-git config --global user.email "fosstars@users.noreply.github.com"
+git config --global user.name $GIT_USER_NAME
+git config --global user.email $GIT_USER_EMAIL
 
 git commit -m "Update Fosstars report" $REPORT_FILE $BADGE_FILE $RAW_RATING_FILE
 if [ $? -ne 0 ]; then

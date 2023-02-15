@@ -25,6 +25,14 @@ inputs:
   data-provider-config-urls:
     description: "A comma-separated list of YAML config file URLs for data providers, file format: ProviderClassName.yaml"
     required: false
+  git-user-name:
+    description: "The git user name used when performing the report commit"
+    required: false
+    default: Fosstars
+  git-user-email: 
+    description: "The git user email address used when performing the report commit"
+    required: false
+    default: "fosstars@users.noreply.github.com"
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -36,6 +44,8 @@ runs:
     - ${{ inputs.fosstars-version }}
     - ${{ inputs.token }}
     - ${{ inputs.data-provider-config-urls }}
+    - ${{ inputs.git-user-name }}
+    - ${{ inputs.git-user-email }}
 branding:
   icon: 'award'  
   color: 'green'

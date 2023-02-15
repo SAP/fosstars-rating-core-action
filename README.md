@@ -68,6 +68,14 @@ and for committing the report and badge to the specified branch.
 The individual file names need to have the format `ProviderClassName.yaml` or `ProviderClassName.config.yaml`.
 As some data providers of the OSS Rules of Play rating require configuration files to work correctly, [SAP default configuration files](https://github.com/SAP/fosstars-rating-core-action/tree/main/rop-sap-defaults) are being used if the `oss-rules-of-play` rating is specified and no configuration URLs are passed to the action.
 
+### `git-user-name`
+
+**Optional** The git user name used when performing the report commit. Default `Fosstars`.
+
+### `git-user-email`
+
+**Optional** The git user email address used when performing the report commit. Default `fosstars@users.noreply.github.com`.
+
 ## How to use it
 
 Here is an example workflow that updates the report every day, or when a commit is pushed.
