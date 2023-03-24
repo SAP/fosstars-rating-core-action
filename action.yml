@@ -28,7 +28,7 @@ inputs:
   git-user-name:
     description: "The git user name used when performing the report commit"
     required: false
-    default: Fosstars
+    default: "Fosstars"
   git-user-email: 
     description: "The git user email address used when performing the report commit"
     required: false
