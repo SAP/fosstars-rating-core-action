@@ -47,7 +47,7 @@ The report and the badge are stored in a specified branch.
 ### `fosstars-version`
 
 **Required** [A version of Fosstars](https://github.com/SAP/fosstars-rating-core/releases)
-to be used for calculating a rating. Default `v1.10.1`.
+to be used for calculating a rating. Default `v1.11.0`.
 
 ### `token`
 
@@ -96,7 +96,7 @@ jobs:
     name: "Security rating"
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: SAP/fosstars-rating-core-action@v1.6.0
+      - uses: SAP/fosstars-rating-core-action@v1.11.0
         with:
           rating: security
           report-branch: fosstars-report
