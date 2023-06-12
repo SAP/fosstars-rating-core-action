@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y git jq
 
 RUN wget https://downloads.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz && \
-    HASH=f7296534ce624f688268e55544ffdf0b37562ac71dbcede4fe4f994b4e9487b7d66934849204373e127cfacc709cd5fd9152a53c06d778fc391aee84aa3364a3 && \
+    HASH=900bdeeeae550d2d2b3920fe0e00e41b0069f32c019d566465015bdd1b3866395cbe016e22d95d25d51d3a5e614af2c83ec9b282d73309f644859bbad08b63db && \
     echo "$HASH apache-maven-3.9.2-bin.tar.gz" | sha512sum --check --status && \
     tar xf apache-maven-3.9.2-bin.tar.gz -C /opt
 
