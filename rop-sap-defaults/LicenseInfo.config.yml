@@ -13,3 +13,4 @@ repositoryExceptions:
   - https://github.com/SAP/project-foxhound
   - https://github.com/SAP/jmc
   - https://github.com/SAP/sanitizer-checker
+  - https://github.com/SAP/scientific-publications-of-sap-hana-database-analytics
